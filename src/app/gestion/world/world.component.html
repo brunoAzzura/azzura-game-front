@@ -1,0 +1,81 @@
+<app-nav></app-nav>
+<div class="container mt-4">
+  <div class="card">
+
+
+
+<div class="card-header">
+
+  <h1>Gestion des mondes</h1>
+</div>
+  <div class="card-body">
+
+  <button class="btn  btn-primary" class="btn btn-outline-primary" (click)="addIsCollapsed = !addIsCollapsed" [attr.aria-expanded]="!addIsCollapsed"
+    aria-controls="collapseThemeDiv" type="button">
+    Créer un nouveau monde
+  </button>
+  <div class="card collapse" id="collapseThemeDiv" [ngbCollapse]="addIsCollapsed">
+    <div class="card-body">
+      <div class="form-group">
+        <label class="center-block">
+          Libellé :
+        </label>
+        <input
+          [(ngModel)]="worldAdded.wording"
+          class="form-control"
+          name="wording"
+          >
+      </div>
+      <div class="form-group">
+        <label class="center-block">
+          Description :
+        </label>
+        <input
+          [(ngModel)]="worldAdded.description"
+          class="form-control"
+          name="description"
+          >
+      </div>
+      <div class="form-group">
+          <label class="center-block">
+            Rang :
+          </label>
+          <input
+            [(ngModel)]="worldAdded.ranking"
+            name="ranking"
+            class="form-control">
+        </div>
+      <button class="btn btn-success" (click)="addWorld()">
+        Valider
+      </button>
+      <button class="btn btn-danger ml-4" (click)="cancelAddWorld()">
+        Annuler
+      </button>
+    </div>
+  </div>
+  <table class="table mt-4">
+    <tr class="thead-dark">
+      <th>Id</th>
+      <th>Monde</th>
+      <th>Description</th>
+      <th>Rang</th>
+      <th>Image</th>
+      <th>Modifier</th>
+    </tr>
+    <tr *ngFor="let world of worlds">
+      <td>{{ world.id }}</td>
+      <td>{{ world.wording }}</td>
+      <td>{{ world.description }}</td>
+      <td>
+        <img *ngIf="world.world_draw.image_path"  class="img-fluid" style="width:150px" src="{{ BASE_PATH + world.world_draw.image_path }}">
+        <p *ngIf="!world.world_draw.image_path" >-</p>
+      </td>
+      <td>{{ world.ranking }}</td>
+      <td>
+        <a routerLink="/gestion/world/{{ world.id }}" routerLinkActive="active" class="btn btn-primary">modifier</a>
+      </td>
+    </tr>
+  </table>
+</div>
+</div>
+</div>

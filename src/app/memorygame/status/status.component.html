@@ -1,0 +1,9 @@
+<div>
+  <span *ngIf="(status$ | async) === status.READY">Cliquer sur les cartes et retrouver les paires !</span>
+  <span *ngIf="(status$ | async) === status.PLAYING">Jeux en cours !</span>
+  <span *ngIf="(status$ | async) === status.FAIL">Perdu !</span>
+  <!-- <span class="hand" *ngIf="(status$ | async) === status.PASS" (click)="reset($event)">Play again</span> -->
+  <!-- <span class="elapsed">{{ elapsedMs$ | async }} s</span> -->
+</div>
+<!-- <span *ngIf="(status$ | async) === status.PLAYING" >Nombre de vies : {{ nbTry$ | async  }}</span> -->
+<!-- <span>Cliquer sur les cartes, et retrouvez les paires</span> -->

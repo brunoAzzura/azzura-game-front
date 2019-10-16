@@ -1,0 +1,15 @@
+<div *ngIf="nbWorldCompleted === NB_WORLD; then certificateUnlockBlock else certificateLockBlock"></div>
+<ng-template #certificateUnlockBlock>
+  <img
+    style="position:absolute;width:8.5%;bottom:2%;left:20%"
+    src="assets/img/world/certificateUnlock.png"
+    class='cliclable'
+    (click)="displayCertificate()"
+  >
+</ng-template>
+<ng-template #certificateLockBlock>
+  <img
+  style="position:absolute;width:9%;bottom:2%;left:20%"
+  src="assets/img/world/certificateLock.png"
+  >
+</ng-template>

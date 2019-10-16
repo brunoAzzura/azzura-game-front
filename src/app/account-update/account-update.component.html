@@ -1,0 +1,82 @@
+<app-nav [noSpace]="true"></app-nav>
+<app-loader *ngIf="user === null" ></app-loader>
+<div *ngIf="user !== null" >
+  <div style="background-image:linear-gradient(to top, grey, black);padding-top: 30px;padding-bottom: 30px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-3 ">
+          <div>
+            <img *ngIf="avatar_path !== null"  style="width:130px" src="{{ BASE_URL + avatar_path }}"
+              class="img-fluid">
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-5">
+          <div style="font-size: 25px;color:white">
+        {{ user.username }}
+          <span style="font-size: 15px;"> >> Modification du profil</span>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-4">
+          <a
+            class="btn btn-light btn-block"
+            routerLink="/account"
+            routerLinkActive="active"
+            >
+            Retour au compte
+          </a>
+          <button (click)="resetGame()" type="button" class="btn btn-danger btn-block">Réinitialiser le jeu</button>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="game-container">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-7">
+          <app-user-update
+            *ngIf="user !== null"
+            [user]="user"
+            [rightManagment]="false"
+            (userUpdated)="userchange($event)"
+            >
+          </app-user-update>
+          <app-spinner *ngIf="user === null" ></app-spinner>
+        </div>
+        <div class="col-md-5">
+          <div class="card">
+            <div class="card-body">
+                <app-user-update-password *ngIf="user !== null"  [userId]="user.id" ></app-user-update-password>
+                <app-spinner *ngIf="user === null" ></app-spinner>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <div class="card-header">
+      <h2>Sélection de l'avatar : </h2>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div *ngFor="let avatar of avatars$ | async"  class="col-3">
+            <a
+              class="btn"
+              (click) = "changeSelectedAvatar(avatar)" >
+                <img
+                  class="img-fluid"
+                  src="{{ BASE_URL + avatar.image_path }}"
+                  [ngClass]="{'avatar-selected': selectedAvatar !== null && avatar.id === selectedAvatar.id }"
+                  />
+            </a>
+        </div>
+      </div>
+      <div class="mt-4">
+          <button (click)="editUserAvatar()" class="btn btn-primary">Valider</button>
+      </div>
+    </div>
+  </div>
+</div>
+

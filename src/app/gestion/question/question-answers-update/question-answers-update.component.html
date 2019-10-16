@@ -1,0 +1,58 @@
+
+<div class="card">
+    <div class="card-body">
+      <h4>Ajouter une nouvelle réponse</h4>
+      <div class="card">
+        <div class="card-body">
+          <form #answerForm="ngForm" (ngSubmit)="addAnswer()">
+              <div class="form-group">
+                  <label class="center-block">
+                    Réponse :
+                  </label>
+                  <input name="wording" required minlength="3" class="form-control" [(ngModel)]="currentAnswer.wording">
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group row">
+                      <label class="col-sm-5">
+                        Correcte :
+                      </label>
+                      <select required class="col-sm-7form-control" style="width:100px" [(ngModel)]="currentAnswer.valid" name="valid">
+                        <option selected value="1">Oui</option>
+                        <option value="0">Non</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-6 float-right">
+                    <button [disabled]="!answerForm.form.valid" type="submit" class="btn btn-primary float-right">
+                      Ajouter
+                    </button>
+                  </div>
+                </div>
+          </form>
+        </div>
+      </div>
+      <h4>Liste des réponses associées</h4>
+      <table *ngIf="answers !== null && answers.length > 0"  class="table">
+        <thead class="thead-light">
+          <tr>
+            <th>Réponse</th>
+            <th>Correcte</th>
+            <th>Supprimer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let answer of answers">
+            <td>{{ answer.wording }}</td>
+            <td>{{ answer.valid == "1" ? "oui" : "non" }}</td>
+            <td>
+              <button class="btn btn-danger" (click)="deleteAnswer(answer.id)">
+                supprimer
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p *ngIf="answers === null || answers.length === 0" class="alert alert-info">Aucune question associée à ce challenge</p>
+    </div>
+  </div>

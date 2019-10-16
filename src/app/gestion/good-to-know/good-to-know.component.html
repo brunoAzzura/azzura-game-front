@@ -1,0 +1,128 @@
+<app-nav></app-nav>
+<div class="container mt-4">
+<div class="card">
+  <div class="card-header">
+    <h1>Gestion des bons à savoir</h1>
+  </div>
+  <div class="card-body">
+
+      <button class="btn btn-outline-primary" (click)="addIsCollapsed = !addIsCollapsed" [attr.aria-expanded]="!addIsCollapsed"
+        aria-controls="collapseThemeDiv" type="button">
+        {{ mode === 'insert' ? "Ajouter un bon à savoir" : "Modification d'un bon à savoir" }}
+      </button>
+      <div class="card collapse" id="collapseThemeDiv" [ngbCollapse]="addIsCollapsed">
+        <div class="card">
+          <div class="card-body">
+            <form>
+              <div class="form-group">
+                <label class="center-block">
+                  Libellé :
+                </label>
+                <input name="wording" [(ngModel)]="goodtoknowAdded.wording" class="form-control">
+              </div>
+              <div class="form-group">
+                <label class="center-block">
+                  Message :
+                </label>
+                <app-ngx-editor
+                [placeholder]="'Entrer le texte qui apparait en complément de l\'image'"
+                [spellcheck]="true"
+                [(ngModel)]="goodtoknowAdded.info"
+                name="info"
+                required
+                >
+                </app-ngx-editor>
+              </div>
+              <div class="form-group">
+                <label class="center-block">
+                  Monde associé :
+                </label>
+                <select
+                  [(ngModel)]="goodtoknowAdded.theme"
+                  [compareWith]="compareByOptionId"
+                  name="theme"
+                  class="form-control"
+                  >
+                  <option *ngFor="let theme of themes" [ngValue]="theme" >
+                    {{ theme.wording }} - {{ theme.world.wording }}
+                  </option>
+                </select>
+              </div>
+              <div *ngIf="mode === 'update'" class="card">
+                <div class="row card-body">
+                  <div class="col-md-3">
+                    <p>Image acutelle :</p>
+                  </div>
+                  <div class="col-md-9">
+                    <img style="width:250px" class="img-fluid" src="{{ BASE_PATH + goodtoknowAdded.path }}">
+                  </div>
+                </div>
+              </div>
+              <div class="mt-4">
+                <input #selectedFile type="file" name="image" ng2FileSelect [uploader]="uploader" />
+                <!-- [disabled]="!uploader.getNotUploadedItems().length" -->
+              </div>
+              <div class="mt-4">
+                <!-- <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" > -->
+                <button type="button" class="btn btn-success btn-s" (click)="updateGoodtoknow()">
+                  Valider
+                </button>
+                <button type="button" class="btn btn-danger btn-s ml-4" (click)="cancelGoodtoknow()">
+                  Annuler
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <table class="table table-striped" [mfData]="goodtoknows" #mf="mfDataTable" [mfRowsOnPage]="10">
+        <thead>
+          <tr>
+            <th>
+              <mfDefaultSorter by="id">#Id</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="wording">Libellé</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="theme.wording">Theme</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by="theme.world.wording">Monde</mfDefaultSorter>
+            </th>
+            <th style="width: 15%">
+              <mfDefaultSorter>Image</mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter>Modification</mfDefaultSorter>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let goodtoknow of mf.data">
+            <td>{{goodtoknow.id}}</td>
+            <td>{{goodtoknow.wording}}</td>
+            <td>{{goodtoknow.theme?.wording}}</td>
+            <td>{{goodtoknow.theme?.world.wording}}</td>
+            <td>
+              <img class="img-fluid" src="{{ BASE_PATH + goodtoknow.path }}">
+            </td>
+            <td>
+              <button (click)="displayUpdateForm(goodtoknow)" class="btn btn-primary">
+                <i class="fa fa-pencil"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+  </div>
+</div>

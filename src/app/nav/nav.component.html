@@ -1,0 +1,64 @@
+<nav class="navbar  navbar-light bg-light navbar-expand-md" [ngClass]="{'mb-4':!fullSreen && !noSpace}" >
+  <!-- navbar-expand-lg -->
+  <div class="container">
+    <a routerLink="/worldmap" routerLinkActive="active" class="navbar-brand">
+      <img className="img-fluid rounded" style="width:60px" alt="logo" src="assets/img/general/logo.png" />
+    </a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" (click)="navbarCollapsed = !navbarCollapsed"
+            [attr.aria-expanded]="!navbarCollapsed" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse" [ngbCollapse]="navbarCollapsed" id="navbarContent">
+      <ul class="navbar-nav mr-auto">
+        <li *ngIf="_auth.getUser()" class="nav-item">
+          <a routerLink="/worldmap" routerLinkActive="active" class="nav-link">Lancer le jeux</a>
+        </li>
+        <li *ngIf="_auth.getUser()" class="nav-item">
+          <a routerLink="/challenges" routerLinkActive="active" class="nav-link">Challenges</a>
+        </li>
+        <li *ngIf="_auth.getUser()" class="nav-item">
+          <a routerLink="/collection" routerLinkActive="active" class="nav-link">Collection</a>
+        </li>
+        <!-- <li *ngIf="_auth.getUser()" class="nav-item">
+          <a routerLink="/shop" routerLinkActive="active" class="nav-link">boutique</a>
+        </li> -->
+        <li *ngIf="_auth.getUser() && _auth.isAdmin()"  class="nav-item dropdown d-lg-block d-none">
+          <div ngbDropdown class="d-inline-block">
+            <a class="nav-link dropdown-toggle btn" id="dropdownGestion" ngbDropdownToggle>Gestion</a>
+            <div ngbDropdownMenu aria-labelledby="dropdownGestion">
+              <a routerLink="/gestion/worlds" routerLinkActive="active" class="dropdown-item">Mondes</a>
+              <a routerLink="/gestion/challenges" routerLinkActive="active" class="dropdown-item">Challenges</a>
+              <a routerLink="/gestion/avatars" routerLinkActive="active" class="dropdown-item">Avatars</a>
+              <a routerLink="/gestion/goodtoknow" routerLinkActive="active" class="dropdown-item">Bons à savoir</a>
+              <a routerLink="/gestion/users" routerLinkActive="active" class="dropdown-item">Utilisateurs</a>
+              <!-- <a routerLink="/gestion/themes" routerLinkActive="active" class="dropdown-item">Themes</a>
+              <a routerLink="/gestion/questions" routerLinkActive="active" class="dropdown-item">Questions/Réponses</a> -->
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <div *ngIf="_auth.getUser()" >
+        <!-- <span style="color:white">Utilisateur : {{ _auth.getUser().username }}</span>
+        <br>
+        <span style="color:white">Crédits : {{ _auth.getUser().credit }}</span>
+        <br>
+        <span style="color:white">Rang : {{ _auth.getUser().ranking }}</span> -->
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a routerLink="/account" routerLinkActive="active" class="nav-link">Mon compte</a>
+          </li>
+        </ul>
+      </div>
+      <ul class="navbar-nav ml-auto">
+        <li *ngIf="!_auth.getUser()" class="nav-item">
+          <a routerLink="/login" routerLinkActive="active" class="nav-link">Login</a>
+        </li>
+        <li *ngIf="_auth.getUser()" class="nav-item">
+          <!-- ajouter fa dans l'application -->
+          <a routerLink="/login" routerLinkActive="active" class="nav-link">Déconexion</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

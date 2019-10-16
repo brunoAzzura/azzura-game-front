@@ -1,0 +1,37 @@
+<div class="card">
+  <div class="card-header">
+    <h3>2- Gestion des images</h3>
+  </div>
+  <div class="card-body">
+      <div class="row">
+          <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <p>Image de présentation du challenge :</p>
+                        <img class="img-fluid" *ngIf="challenge.image_presentation_path"  src="{{ BASE_PATH + challenge.image_presentation_path }}">
+                      </div>
+                      <p class="alert alert-info" *ngIf="!challenge.image_presentation_path">
+                        Aucune image de présentation associée au challenge
+                      </p>
+                </div>
+              </div>
+          </div>
+          <div class="col-6">
+              <div class="card">
+                  <div class="card-body">
+                    <div>
+                        <p>Uploader une nouvelle image :</p>
+                        <input class="mt-4" #selectedFile type="file" name="challengeImage" ng2FileSelect [uploader]="uploaderFile" />
+                    </div>
+                    <div class="mt-2">
+                      <button type="button" class="btn btn-success btn-s" (click)="uploaderFile.uploadAll()" >
+                        Uploader l'image
+                      </button>
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+  </div>
+</div>

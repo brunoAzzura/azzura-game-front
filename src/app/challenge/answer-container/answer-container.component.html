@@ -1,0 +1,23 @@
+<div class="card">
+  <div class="card-header text-center py-1" *ngIf="status==='goodAnswer'">
+    <h5 [@flyInOutLeft]="" ><fa-icon style="font-size: 2rem" [icon]="fas.happy" class="mr-2"></fa-icon>Bonne réponse !</h5>
+  </div>
+  <div class="card-header text-center py-1" *ngIf="status==='badAnswer'" >
+    <h5 [@flyInOutLeft]=""><fa-icon style="font-size: 2rem" [icon]="fas.sad" class="mr-2"></fa-icon>Mauvaise réponse !</h5>
+  </div>
+
+  <div  class="card-body p-2">
+      <div [@flyInOutRight]="" class="card" *ngIf="question.complement">
+        <div class="card-body p-2">
+            <h5><i class="fa fa-exclamation-circle mr-1"></i>Bon à savoir :</h5>
+              <div id="question.id" style="font-size:15px" [innerHTML]="question.complement"></div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button (click)="validedAnswer()" class="mt-2 btn btn-primary">
+          Valider
+        </button>
+      </div>
+  </div>
+</div>

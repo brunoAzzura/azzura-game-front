@@ -1,0 +1,11 @@
+<div *ngIf="certificate"  class="card p-2">
+  <div class="card-body p-0 text-center">
+    <img class="img-fluid" style="width:72%" src="{{ BASE_PATH + certificate.path }}" >
+  </div>
+  <div class="text-center">
+    <button (click)="download()" class="btn btn-success"><i class="fa fa-download mr-2"></i>Télécharger le certificat</button>
+    <button (click)="close()" class="btn btn-primary ml-4">Retour</button>
+  </div>
+</div>
+
+

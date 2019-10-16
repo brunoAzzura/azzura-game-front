@@ -1,0 +1,30 @@
+
+
+.challenge-div {
+  height: auto;
+  position: relative;
+  -webkit-transition: opacity 0.5s ease-out;
+  -moz-transition: opacity 0.5s ease-out;
+  -o-transition: opacity 0.5s ease-out;
+  transition: opacity 0.5s ease-out;
+}
+.challenge-div:hover .work-text-content {
+  visibility: visible;
+  opacity: 1.0 !important;
+}
+.challenge-div:hover > img {
+  opacity: 0.2;
+}
+.work-text-content {
+  width: 70%;
+  height: auto;
+  visibility: hidden;
+  z-index: 100;
+  position: absolute;
+  color: black;
+  left: 15%;
+  top: 15%;
+  font-size: 24px;
+  text-align: center;
+  -webkit-transition: visibility opacity 2.0Ms;
+}

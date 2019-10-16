@@ -1,0 +1,43 @@
+.display-none
+  display: none
+// .border-game
+  // border-radius: 20px
+// body
+//   background-color: blue!important
+h3
+  font-size: 1.2rem
+
+.moving
+  animation-duration: 3s
+  animation-timing-function: ease-in
+  animation-name: move
+  animation-iteration-count: infinite
+  animation-direction: alternate // both sides
+  animation-fill-mode: backwards // apply before animation (forwards and both)
+  animation-delay: 2s
+
+@keyframes move
+  0%
+    transform: translateY(30%) translateY(16%) scale(1.0)
+  50%
+    transform: translateY(15%) translateY(5%) scale(1.1)
+  80%
+    transform: translateY(10%) translateY(16%) scale(1.2)
+  100%
+    transform: translateY(0%) translateY(-10%) scale(1.3)
+
+@media (max-width: 992px)
+  .info-container
+    width: 50%
+
+@media (min-width: 992px) and (max-width: 1280px)
+  .info-container
+    width: 90%
+    margin: auto
+
+@media (min-width: 1280px)
+  .info-container
+    width: 70%
+    margin: auto
+
+

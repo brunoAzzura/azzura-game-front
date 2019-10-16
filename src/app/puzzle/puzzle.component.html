@@ -1,0 +1,94 @@
+
+<div  class="card" *ngIf="showHelper===true">
+  <div class="card-body p-1 text-center instruction">
+    <img
+      class="img-fluid"
+      [ngStyle]="{'width': fullSreen?'50%':'70%'}"
+      src="assets/img/games/puzzle_rules.png">
+    <div class="text-center">
+      <button class="btn btn-lg btn-primary mt-2" (click)="launchGame()" >
+        START
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="card" *ngIf="showHelper===false && puzzleGame" >
+  <div class="card-body p-1">
+    <div class="row" >
+      <div class="col-7">
+        <div class="puzzle-container">
+            <div
+            style="position:relative;"
+            *ngFor="let piece of pieces"
+            class="img-puzzle float-left"
+            [ngStyle]="getPieceWidthStyle()"
+            [class.puzzle-over]="statut === 'victory'"
+            >
+            <!-- [disabled]="1" -->
+              <a
+                class="d-block"
+                (click)="switchPiece(piece)"
+                [class.disabled]="statut !== 'progress'"
+                style="cursor: pointer; padding:0px; border:none"
+                >
+                  <img
+                    [class.selected]="pieceSelected !== null && piece.id === pieceSelected.id && statut === 'progress'"
+                    [class.rotateEnabled]="pieceSelected !== null && piece.id === pieceSelected.id && !disableClick && statut === 'progress'"
+                    class="img-fluid"
+                    [ngClass]="getPuzzleClass(piece)"
+                    src="{{ BASE_PATH + piece.image_path }}">
+          </a>
+              <button
+                (click)="cancelPieceSelected()"
+                *ngIf="pieceSelected !== null && piece.id === pieceSelected.id && statut === 'progress'"
+                style="position:absolute;bottom:0;right:0"
+                class="btn btn-danger btn-sm"
+                [disabled]= "statut !== 'progress'"
+                >
+                  X
+              </button>
+          </div>
+      </div>
+    </div>
+      <div class="col-5">
+
+        <div class="card">
+          <div class="card-header">
+              <h3 class="m-0"><i class="fa fa-exclamation-circle mr-3"></i><strong>Puzzle</strong></h3>
+          </div>
+          <div class="card-body">
+              <div *ngIf="statut==='progress' && puzzleGame"  class="alert alert-info mt-2 py-2 text-center" [ngClass]="{'time':animationTimer}" >
+                  <b>Temps restant</b> : {{ puzzleGame.time_limit - (timer$ | async) }}s
+                </div>
+                <div *ngIf="statut==='victory'" style="margin-top:10px" class="alert alert-success text-center" >
+                    <p><strong>Félicitation</strong> vous avez reconstitué le puzzle !</p>
+                    <div class="">
+                      <button (click)="leavePuzzle()" class="btn btn-success btn-lg">
+                        Continuer
+                      </button>
+                    </div>
+                </div>
+                <div *ngIf="statut==='fail'" style="margin-top:10px" class="alert alert-danger text-center" >
+                  <p><strong>Le temps est écoulé</strong>, retente ta chance plus tard !</p>
+                  <div class="">
+                    <button (click)="leavePuzzle()" class="btn btn-danger btn-lg">
+                      Continuer
+                    </button>
+                  </div>
+                </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+<!-- <button (click)="winAuto()" >win!</button> -->
+  </div>
+</div>
+<div *ngIf="showHelper===false && !puzzleGame"    class="question-container text-center">
+  <img src="assets/img/general/loading.gif" class="img-fluid">
+</div>
+
+
+
+

@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-6">
+      <div class="card">
+          <div class="card-body">
+              <div *ngIf="question.image_path" >
+                  <p>Image actuelle :</p>
+                  <img class="img-fluid" *ngIf="question.image_path"  src="{{ BASE_PATH + question.image_path }}">
+                </div>
+                <p class="alert alert-info" *ngIf="!question.image_path">
+                  Aucune image associée à la question
+                </p>
+          </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+              <div>
+                  <p>Uploader une nouvelle image :</p>
+                  <input class="mt-4" #selectedQuestionFile type="file" name="questionImage" ng2FileSelect [uploader]="uploaderQuestionFile" />
+              </div>
+              <div class="mt-2">
+                <button type="button" class="btn btn-primary" (click)="uploaderQuestionFile.uploadAll()" >
+                  Uploader l'image
+                </button>
+              </div>
+            </div>
+          </div>
+    </div>
+  </div>
+
+
+
+
+<!-- [disabled]="!uploaderQuestionFile.getNotUploadedItems().length" -->

@@ -1,0 +1,24 @@
+<span *ngFor="let theme of themes">
+  <a
+    class="theme btn"
+
+    *ngIf="!themeDone(theme)"
+    style="position:absolute;padding:0;cursor: pointer;"
+    [ngStyle]="getStylePosition(theme.theme_draw)"
+    (click)="displayGame(theme)"
+  >
+    <img
+      class="img-fluid"
+      [@biggerAnimation]="sizes[theme.id]"
+      (mouseover)="select($event, theme.id)"
+      (mouseleave)="out($event, theme.id)"
+      src="{{ getImgPath(theme) }}"
+    />
+  </a>
+  <img
+    *ngIf="themeDone(theme)"
+    style="position:absolute"
+    src="{{ getImgPath(theme) }}"
+    [ngStyle]="getStylePosition(theme.theme_draw)"
+  />
+</span>

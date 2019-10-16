@@ -1,0 +1,109 @@
+<div class="card mt-4">
+  <div class="card-header">
+      <h2>3- Configurer le puzzle</h2>
+  </div>
+  <div class="card-body"  >
+    <app-spinner *ngIf="puzzlePieces === null"></app-spinner>
+    <div *ngIf="puzzlePieces !== null" >
+      <form>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label class="center-block">
+                Limite de temps (secondes) :
+              </label>
+              <input name="time_limit" [(ngModel)]="theme.puzzle_game.time_limit" class="form-control">
+            </div>
+          </div>
+          <div class="col-6">
+              <div class="form-group">
+                <label class="center-block">
+                  Nb de cases (sur une ligne) :
+                </label>
+                <input name="nb_cases" [(ngModel)]="theme.puzzle_game.nb_cases" class="form-control">
+              </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-success btn-s" (click)="updatePuzzleGame()">
+          Valider
+        </button>
+      </form>
+      <h3>Liste des pieces associées au puzzle</h3>
+      <button class="btn  btn-primary" class="btn btn-outline-primary" (click)="addIsCollapsed = !addIsCollapsed" [attr.aria-expanded]="!addIsCollapsed"
+      aria-controls="collapseThemeDiv" type="button">
+      {{ mode === 'insert' ? "Ajouter une piece" : "Modifier une piece" }}
+    </button>
+    <div class="card collapse" id="collapseThemeDiv" [ngbCollapse]="addIsCollapsed">
+      <div class="card">
+        <div class="card-body">
+          <form>
+            <div *ngIf="mode === 'update'" class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3">
+                    <p>Image acutelle :</p>
+                  </div>
+                  <div class="col-md-9">
+                    <img src="{{ BASE_PATH + theme.puzzle_game.image_puzzle_path }}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4">
+              <input #selectedPuzzlePieceFile type="file" name="puzzlePieceImage" ng2FileSelect [uploader]="uploaderPuzzlePieceFile" />
+            </div>
+            <div class="mt-4">
+              <button type="button" class="btn btn-success btn-s" (click)="updatePuzzlePiece()">
+                Valider
+              </button>
+              <button type="button" class="btn btn-danger btn-s ml-4" (click)="cancelPuzzlePiece()">
+                Annuler
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th>#Id</th>
+            <th>Ordre</th>
+            <th style="width:5%">Image</th>
+            <th>Supprimer</th>
+          </tr>
+        </thead>
+        <!-- | filterPuzzlePiecesByOrder: puzzlePiece.piece_order -->
+        <!-- | filterGoodtoknowsByWorld: world.id -->
+        <tbody>
+          <tr *ngFor="let puzzlePiece of puzzlePieces | filterPuzzlePiecesByOrder " >
+            <td>{{ puzzlePiece.id }}</td>
+            <td>{{ puzzlePiece.piece_order }}</td>
+            <td style="width:10%"><img class="img-fluid" src="{{ BASE_PATH + puzzlePiece.image_path }}"></td>
+            <td>
+              <button class="btn btn-danger" (click)="deletePiece(puzzlePiece.id)">Supprimer</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Modification de l'ordonnancement des pieces</h3>
+      <p class="alert alert-info">Cliquer sur 2 pieces pour inverser leurs places</p>
+      <!-- avoir toutes les pieces qui font la meme hauteur -->
+      <div
+        style="position:relative;padding:2px"
+        *ngFor="let piece of puzzlePieces | filterPuzzlePiecesByOrder "
+        class="img-puzzle float-left"
+        [class.selected]="pieceSelected !== null && piece.id === pieceSelected.id"
+        [ngStyle]="getPieceWidthStyle()"
+        >
+        <!-- [ngStyle]="getPieceWidthStyle()" -->
+          <a class="d-block" (click)="switchPiece(piece)" style="cursor: pointer;">
+              <img
+                class="img-fluid"
+                src="{{ BASE_PATH + piece.image_path }}">
+          </a>
+          <button (click)="cancelPieceSelected()" *ngIf="pieceSelected !== null && piece.id === pieceSelected.id"  style="position:absolute;bottom:0;right:0" class="btn btn-danger btn-sm">X</button>
+      </div>
+    </div>
+  </div>
+</div>

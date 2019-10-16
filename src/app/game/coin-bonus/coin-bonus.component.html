@@ -1,0 +1,8 @@
+<img
+*ngIf="displayCoin"
+class="img-fluid flash"
+(click)="unlockBonus()"
+src="assets/img/world/coin.gif"
+style="position:absolute;width:7%;top:0%;left:4%;z-index:999;cursor: pointer;"
+[@moveRandomly]="positionCoin"
+>

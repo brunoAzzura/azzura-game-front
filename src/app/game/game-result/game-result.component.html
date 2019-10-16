@@ -1,0 +1,45 @@
+<!-- BLOCK score recap -->
+<app-score-gauge
+  [score]='score'
+  [worldCompleted] = 'worldCompleted'
+  [moveVertical] = 'moveVertical'
+></app-score-gauge>
+<!--  BLOCK success answer bubble bravo + token  -->
+<div *ngIf="gameCompleted === true">
+  <div class="answer_success">
+    <div class="white_overlay"></div>
+    <img
+      class="img-fluid"
+      src="assets/img/theme/bubble_success.png"
+      style="width:40%;position:absolute;top:15%;left:30%;z-index: 1001;"
+    />
+    <!-- *ngIf="displayToken" -->
+    <img
+      class="token_success_answer"
+      src="assets/img/theme/token_success_answer.png"
+      [@moveLeft]="moveLeft"
+      (@moveLeft.done)="animationDone($event, 'success')"
+    />
+  </div>
+</div>
+<!--  BLOCK error answer  -->
+<div *ngIf="gameCompleted === false">
+  <div class="white_overlay"></div>
+  <div class="answer_error">
+    <!-- largeur en % -->
+    <img
+      class="img-fluid"
+      src="assets/img/theme/bubble_error.png"
+      style="width:40%;position:absolute;top:15%;left:30%;z-index: 1001;"
+    />
+    <!-- *ngIf="displayToken" -->
+    <img
+      class="token_bad_answer img-fluid"
+      src="assets/img/theme/token_bad_answer.png"
+      [@moveLeft]="moveLeft"
+      (@moveLeft.done)="animationDone($event, 'error')"
+    />
+  </div>
+</div>
+
+

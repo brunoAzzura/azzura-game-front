@@ -1,0 +1,82 @@
+<app-nav></app-nav>
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h1>Gestion des avatars</h1>
+    </div>
+    <div class="card-body">
+      <button class="btn  btn-primary" class="btn btn-outline-primary" (click)="addAvatarIsCollapsed = !addAvatarIsCollapsed" [attr.aria-expanded]="!addAvatarIsCollapsed"
+        aria-controls="collapseThemeDiv" type="button">
+        {{ mode === 'insert' ? "Ajouter un avatar" : "Modification de l'avatar" }}
+      </button>
+      <div class="card collapse" id="collapseThemeDiv" [ngbCollapse]="addAvatarIsCollapsed">
+        <div class="card">
+          <div class="card-body">
+            <form>
+              <div class="form-group">
+                <label class="center-block">
+                  Libellé :
+                </label>
+                <input name="libelle" [(ngModel)]="avatar.libelle" class="form-control">
+              </div>
+              <div *ngIf="mode === 'update'" class="card">
+                <div class="row card-body">
+                  <div class="col-md-3">
+                    <p>Image acutelle :</p>
+                  </div>
+                  <div class="col-md-9">
+                    <img src="{{ BASE_PATH + avatar.image_path }}">
+                  </div>
+                </div>
+              </div>
+              <div class="mt-4">
+                <input #selectedFile type="file" name="image" ng2FileSelect [uploader]="uploader" />
+                <!-- [disabled]="!uploader.getNotUploadedItems().length" -->
+              </div>
+              <div class="mt-4">
+                <!-- <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" > -->
+                <button type="button" class="btn btn-success btn-s" (click)="updateAvatar()">
+                  Valider
+                </button>
+                <button type="button" class="btn btn-danger btn-s ml-4" (click)="cancelAvatar()">
+                  Annuler
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <table class="table mt-4">
+        <thead>
+          <tr>
+            <th>#Id</th>
+            <th>Libelle</th>
+            <th>Image</th>
+            <th>Modifier</th>
+            <!-- <th>Supprimer</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let avatar of avatars">
+            <td>{{ avatar.id }}</td>
+            <td>{{ avatar.libelle }}</td>
+            <td>
+              <img src="{{ BASE_PATH + avatar.image_path }}">
+            </td>
+            <td>
+              <button (click)="displayUpdateForm(avatar)" class="btn btn-primary">
+                <i class="fa fa-pencil"></i>
+              </button>
+            </td>
+            <!-- <td>
+              <button (click)="delelteAvatar(avatar)" class="btn btn-danger">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

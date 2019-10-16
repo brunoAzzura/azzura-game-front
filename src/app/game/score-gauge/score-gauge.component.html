@@ -1,0 +1,30 @@
+
+      <div class="score-section">
+        <div class="score-bar">
+          <img src="assets/img/theme/progress_bar.png" />
+
+          <img
+            src="{{ starPicture() }}"
+            class="img-fluid"
+            style="position: absolute;left:0;top:0"
+            placement="bottom"
+          />
+          <img
+            *ngIf="displayLock()"
+            class="lock_token"
+            placement="right"
+            src="assets/img/theme/lock.png"
+          />
+          <img
+            class="score_token"
+            src="assets/img/theme/score_token.png"
+            [@moveVetical]="moveVertical"
+          />
+
+        </div>
+        <div
+          style="position:absolute;width:4.8%;left:5%;top:67%"
+          class="score_number text-center"
+          >
+          <strong>{{ score }}</strong>
+        </div>

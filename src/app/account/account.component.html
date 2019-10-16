@@ -1,0 +1,90 @@
+<app-nav [noSpace]="true"></app-nav>
+<app-loader *ngIf="user === null"></app-loader>
+<div *ngIf="user !== null">
+  <div style="background-image:linear-gradient(to top, grey, black);padding-top: 30px;padding-bottom: 30px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4">
+          <div>
+            <img *ngIf="avatar_path !== null"
+              style="width:130px"
+              src="{{ BASE_URL + avatar_path }}" class="img-fluid">
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div style="font-size: 25px;color:white">{{ user.username }}</div>
+          <div style="font-size: 20px;color:white">{{ user.email }}</div>
+        </div>
+        <div class="col-sm-3">
+          <div style="font-size: 20px;color:white">Rang :
+            <span
+              style="border: 2px solid white;border-radius: 100%;padding-left:8px;padding-right:8px">{{ user.ranking }}</span>
+          </div>
+          <div class="mt-2">
+            <a class="btn btn-light btn-sm" routerLink="/account/update" routerLinkActive="active">Modifier le
+              profil</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="user && goodToKnowStats" class="game-container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h2>Récapitulatif des scores</h2>
+        </div>
+        <div class="card-body">
+          <div *ngIf="user !== null && worldScores">
+            <table class="table" *ngIf="worldScores.length > 0">
+              <thead>
+                <tr style="text-align: center">
+                  <th>Mondes parcourus</th>
+                  <th></th>
+                  <th>Complété</th>
+                  <th>bons à savoirs</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="text-align: center" *ngFor="let worldScore of worldScores">
+                  <td>{{ worldScore.world.wording }}</td>
+                  <td>
+                    <img style="width:200px" src="{{ BASE_URL + worldScore.world.world_draw.image_path }}">
+                  </td>
+                  <td>
+                      <div *ngIf="worldScore.completed; then check else unCheck"></div>
+                      <ng-template #check><i class="fa fa-check" style="font-size: 30px;"></i></ng-template>
+                      <ng-template #unCheck><i class="fa fa-times" style="font-size: 30px;"></i></ng-template>
+                  </td>
+                  <td>
+                    {{ getGoodToKnowStat(worldScore.world.id).nbGoodToNowUnlock }}
+                    /
+                    {{ getGoodToKnowStat(worldScore.world.id).nbGoodToKnow }}
+                  </td>
+                </tr>
+              </tbody>
+              <!--  -->
+            </table>
+            <div *ngIf="worldScores.length === 0" class="alert alert-info">Aucun score n'a encore était
+              enregistré. Clique sur lancer le jeux dans le menu pour commencer une partie !</div>
+          </div>
+          <app-spinner *ngIf="user === null"></app-spinner>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h2>Statistiques</h2>
+        </div>
+        <div class="card-body">
+          nombre de bons à savoirs débloqués : ...
+          autre ?
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<app-nav></app-nav>
+<div class="container mt-4" *ngIf="challenge !== null" >
+  <div class="alert alert-dark" role="alert">
+    <h2>Modification du challenge : {{ challenge.wording }}</h2>
+  </div>
+  <div class="card">
+    <div class="card-body">
+        <ngb-tabset>
+            <ngb-tab  title="Data" >
+              <ng-template ngbTabContent >
+                  <app-update-challenge-data
+                    [challenge]="challenge"
+                  >
+                </app-update-challenge-data>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab  title="gestion des images"  >
+                <!-- disabled="question.id === undefined" -->
+                <ng-template ngbTabContent >
+                    <app-update-challenge-images
+                      [challenge]="challenge"
+                      (imageUpload) = "updateChallengeImagePath($event)"
+                    ></app-update-challenge-images>
+                </ng-template>
+              </ngb-tab>
+              <!-- disabled="question.id === undefined" -->
+              <ngb-tab  title="gestion des questions"  >
+                  <ng-template ngbTabContent >
+                      <app-update-questions-container
+                      [challengeId]="challenge.id"
+                    ></app-update-questions-container>
+                  </ng-template>
+                </ngb-tab>
+          </ngb-tabset>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,18 @@
+<span *ngFor="let world of worlds">
+  <a [@biggerAnimation]="sizes[world.id]" (mouseover)='select($event, world.id)'
+    (mouseleave)='out($event, world.id)' style="width:24%;position:absolute;padding:0;cursor: pointer;"
+    (click)="emitWorldSelected(world)" *ngIf="userRanking >= world.ranking"
+    [ngStyle]="getStylePosition(world.world_draw)">
+    <div style="position: relative;">
+      <img class="img-fluid" src="{{ BASE_PATH + world.world_draw.image_path }}">
+      <img src="{{getRoundImage(world.id)}}" style="position: absolute;bottom:7%;right:42%;width:17%">
+    </div>
+  </a>
+  <div style="width:24%;position:absolute;padding:0" [ngStyle]="getStylePosition(world.world_draw)"
+    *ngIf="userRanking < world.ranking">
+    <img class="img-fluid" placement="bottom" src="{{ BASE_PATH + world.world_draw.image_path }}">
+    <img src="assets/img/world/lock_round.png" style="position: absolute;bottom:7%;right:42%;width:17%">
+  </div>
+</span>
+
+<app-vegetables-island></app-vegetables-island>

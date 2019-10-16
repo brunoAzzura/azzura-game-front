@@ -1,0 +1,49 @@
+<!-- *ngIf="questions && questions.length > 0" -->
+<div *ngIf="questions !== undefined" >
+    <div *ngIf="questions.length === 0">
+        <p class="alert alert-info mt-2">
+          Auncune réponse associés à cette question
+        </p>
+      </div>
+  <table *ngIf="questions.length > 0"  class="table mt-4">
+      <thead class="thead-dark">
+        <tr>
+          <th>#id</th>
+          <th>Question</th>
+          <th style="width:40%">Réponses</th>
+          <th>Image</th>
+          <th>Modifier</th>
+          <th>Supprimer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let question of questions">
+          <td>{{ question.id }}</td>
+          <td>{{ question.wording }}</td>
+          <td>
+            <ul class="list-group">
+              <li *ngFor="let answer of question.answers" class="list-group-item">
+                {{ answer.wording }}
+              </li>
+            </ul>
+          </td>
+          <td>
+            <img class="img-fluid" *ngIf="question.image_path"  src="{{ BASE_PATH + question.image_path }}">
+            <span *ngIf="!question.image_path">-</span>
+          </td>
+          <td>
+            <button class="btn btn-primary btn-md" (click)="displayFormUpdateQuestion(question)">
+              Modifier
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-danger btn-md" (click)="deleteQuestion(question.id)">
+              Supprimer
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+<app-spinner *ngIf="questions === undefined"></app-spinner>
+

@@ -1,0 +1,53 @@
+<div *ngIf="!load"  class="text-center">
+  <div *ngIf="rewardDisplayed" class="card">
+    <div class="card-body">
+      <h5>
+        <i class="fa fa-unlock"></i> <strong>Félicitation</strong>, nouveau
+        contenu débloqué !
+      </h5>
+      <div *ngIf="type === 'investmentBonus'"  class="info-container">
+        <img style="width:50%" class="img-fluid" src="{{ BASE_PATH + rewardDisplayed.path }}" />
+      </div>
+      <div *ngIf="type !== 'investmentBonus'"  class="info-container">
+        <div class="row mb-2">
+          <div class="col-6">
+              <img style="width:90%" class="img-fluid" src="{{ BASE_PATH + rewardDisplayed.path }}" />
+          </div>
+          <div class="col-6 d-flex align-items-center">
+              <div class="card">
+                <div class="card-body">
+                    <div id="rewardDisplayed.id" [ngStyle]="{'font-size': (fullScreen? '0.75rem' : '1.2rem')}" [innerHTML]="rewardDisplayed.info"></div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+      </div>
+      <div>
+        <button (click)="close()" class="btn btn-primary btn-lg">
+          continuer!
+        </button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!rewardDisplayed" class="card">
+    <div class="card-header">
+      <h4>Bonus!</h4>
+    </div>
+    <div class="card-body">
+      <h5>
+        <i class="fa fa-unlock"></i> <strong>Félicitation</strong>, Vous
+        avez déjà débloqué toutes les récompenses !
+      </h5>
+      <!-- <img class="img-fluid" src=""/> -->
+      <div>
+        <button (click)="close()" class="btn btn-primary">
+          continuer!
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="load" >
+  <img src="assets/img/general/loading.gif" class="img-fluid">
+</div>

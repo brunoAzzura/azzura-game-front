@@ -1,0 +1,29 @@
+<app-nav></app-nav>
+<app-loader *ngIf="challenges === null" ></app-loader>
+<div  class="game-container"  *ngIf="challenges !== null" >
+  <div class="card" >
+    <div class="card-header">
+      <h3>Challenges</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+          <div *ngFor="let challenge of challenges" class="col-lg-4 col-sm-6 mb-3 challenge-div">
+            <img src="{{ BASE_PATH + challenge.image_presentation_path }}" class="img-fluid">
+            <div class="work-text-content">
+              <h5>
+                {{ challenge.wording }}
+              </h5>
+              <p style="font-size:1rem">
+                {{ challenge.description }}
+              </p>
+              <button
+                class="btn btn-md btn-primary"
+                (click)="launchChallenge(challenge.id)">
+                Go!
+              </button>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

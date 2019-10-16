@@ -1,0 +1,66 @@
+
+<div class="card" *ngIf="step===1"  >
+  <div class="card-header">
+      <h5 class="m-0 text-center">
+           {{ challenge.wording }}
+      </h5>
+  </div>
+  <div class="card-body py-3">
+      <div class="e2e-inner-html-bound"  id="challenge_{{ challenge.id }}" name="challenge" style="font-size: 15px" [innerHTML]="challenge.introduction_text">
+      </div>
+
+      <!-- <p class="alert alert-success mt-4">
+            Vous allez devoir répondre à une série de questions !
+            <br><br>
+            Pour chaque question, sélectionner au moins une bonne réponse puis valider.
+            <br>
+            Attention, il peut y avoir <strong>plusieurs bonnes réponses</strong> à sélectionner !!!
+            <br><br>
+            <b>Bonne chance !</b>
+          </p> -->
+
+          <div class="text-center">
+              <button
+                class="btn btn-primary"
+                (click)="nextStep()"
+                >
+                Commencer le challenge !
+              </button>
+            </div>
+    </div>
+</div>
+
+
+<div class="card" *ngIf="step===2"  >
+    <div class="card-header text-center">
+
+        <h5 class="m-0 ">
+          <i class="fa fa-exclamation-circle mr-3"></i>
+          Pour commencer
+        </h5>
+    </div>
+    <div class="card-body py-3">
+        <p><strong>Petit rappel bon à savoir ...</strong></p>
+
+        <p>
+            Vous allez devoir répondre à <strong>un certain nombre de questions.</strong>
+          </p>
+            <ul>
+              <li>Dès que la réponse est validée, <strong>vous ne pouvez plus revenir en arrière</strong></li>
+              <li>Il peut y avoir <strong>plusieurs bonnes réponses</strong> à sélectionner</li>
+            </ul>
+
+
+            <div class="text-center">
+                <button
+                  class="btn btn-primary"
+                  (click)="startGame()"
+                  >
+                  Continuer !
+                </button>
+              </div>
+      </div>
+  </div>
+
+
+

@@ -1,0 +1,74 @@
+<app-nav *ngIf="menuDisplayed"></app-nav>
+<div [ngClass]="{ 'game-container': !fullScreen }">
+  <div style="position:relative;overflow: hidden;">
+
+    <!-- Loading Block -->
+    <app-game-loader [dataLoaded]="themesDataLoaded && worldScoreDataloaded" (hideLoader)="initGame($event)" ></app-game-loader>
+
+    <div *ngIf="themesDataLoaded && worldScoreDataloaded" [hidden]="!gameDisplayed">
+
+      <!-- bonus coin -->
+      <app-coin-bonus
+        [userId]="user.id"
+      ></app-coin-bonus>
+
+      <!-- Helper Button (Only Mobile & Tablet) -->
+      <a
+        *ngIf="fullScreen"
+        class="moving"
+        (click)="displayInstruction()"
+        style="cursor:pointer;position:absolute;left:0%;bottom:0%;width:20%"
+      >
+        <img class="img-fluid" src="assets/img/general/helper.png" />
+      </a>
+      <!-- Menu Button (Only Mobile & Tablet) -->
+      <button
+        *ngIf="fullScreen"
+        (click)="menuDisplayed = !menuDisplayed"
+        style="position:absolute;top:2%;right:2%"
+        class="btn btn-success btn-lg"
+      >
+        Menu
+      </button>
+
+      <!-- Background Image -->
+      <img
+        class="border-game"
+        style="width:100%"
+        src="{{ BASE_PATH + world.world_draw.background }}"
+      />
+      <!-- Transition Image -->
+      <app-cloud-transition
+        [transition] = "transition"
+      ></app-cloud-transition>
+      <!-- World Logo Image -->
+      <img
+        src="{{ BASE_PATH + world.world_draw.logo_path }}"
+        style="position:absolute;left:12%;top:0;width: 20%"
+      />
+      <!-- ALL THEMES MASCOT -->
+      <app-mascot-list
+        *ngIf="themes"
+        [themes]="themes"
+        [scores]="resultByTheme"
+        (gameCompleted)="completeGame($event)"
+      >
+      </app-mascot-list>
+
+      <app-game-result
+        [gameCompleted] = "gameCompleted"
+        [score] = "score"
+        [worldCompleted] = "worldCompleted"
+        (resultAnimationDone)="displayReward()"
+      >
+      </app-game-result>
+    </div>
+  </div>
+  <!-- ToolBare Section (only Desktop)  -->
+  <app-level-tool-bar
+    *ngIf="gameDisplayed && !fullScreen"
+    (displayMenu)="menuDisplayed = $event"
+    (returnWorld)="returnWorldMap()"
+    >
+  </app-level-tool-bar>
+</div>

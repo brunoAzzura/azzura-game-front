@@ -1,0 +1,62 @@
+.question
+  position: absolute
+  top: 0
+  background: rgba(255, 255, 255, .5)
+  width: 100%
+
+.question-container, .success-container
+  position: absolute
+  left: 22%
+  height: 58%
+  width: 50%
+  // border: solid black 1px
+
+.question-container
+  top: 20%
+
+.success-container
+  top: 22%
+
+
+h3
+  color: white
+  text-align: center
+
+.display-none
+  display: none
+
+@media (max-width: 992px)
+  .info-container
+    width: 100%
+
+@media (max-width: 1280px)
+  .info-container
+    width: 90%
+    margin: auto
+
+@media (min-width: 1280px)
+  .info-container
+    width: 70%
+    margin: auto
+
+h3
+  font-size: 1.2rem
+
+.moving
+  animation-duration: 3s
+  animation-timing-function: ease-in
+  animation-name: move
+  animation-iteration-count: infinite
+  animation-direction: alternate // both sides
+  animation-fill-mode: backwards // apply before animation (forwards and both)
+  animation-delay: 2s
+
+@keyframes move
+  0%
+    transform: translateY(30%) translateY(16%) scale(1.0)
+  50%
+    transform: translateY(15%) translateY(5%) scale(1.1)
+  80%
+    transform: translateY(10%) translateY(16%) scale(1.2)
+  100%
+    transform: translateY(0%) translateY(-10%) scale(1.3)

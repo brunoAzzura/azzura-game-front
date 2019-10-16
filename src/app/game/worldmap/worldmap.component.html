@@ -1,0 +1,66 @@
+<app-nav *ngIf="displayMenu"></app-nav>
+<div [ngClass]="{'game-container': !fullSreen}">
+  <div style="position:relative;width:100%;overflow: hidden;">
+    <!-- Loading Block -->
+    <app-game-loader [dataLoaded]="userDataLoaded && worldDataLoaded" (hideLoader)="initGame($event)" ></app-game-loader>
+
+    <!-- loader is still true to display images when data are loaded -->
+    <div *ngIf="worldDataLoaded && userDataLoaded" [hidden]="!displayGame">
+      <!-- World Map -->
+      <img class="border-game" style="width:100%;" src="assets/img/world/worldMapMobile.png">
+
+      <!-- bonus coin -->
+      <app-coin-bonus
+        [userId]="user.id"
+      ></app-coin-bonus>
+
+      <!-- Score Block -->
+      <app-global-score
+        [nbWorldCompleted]="worldsCompletedScore.length"
+        [nbWorldScoreMax]="nbWorldScoreMax"
+      ></app-global-score>
+
+      <!-- Flower Block  -->
+      <app-flower-trophy
+        [nbWorldScoreMax]="nbWorldScoreMax"
+      ></app-flower-trophy>
+
+      <!-- certificate  -->
+      <app-certificate-bonus
+        [nbWorldCompleted]="worldsCompletedScore.length"
+        [userId]="user.id"
+      >
+      </app-certificate-bonus>
+
+      <!-- Menu Button (Only mobile & tablette) -->
+      <button *ngIf="fullSreen" (click)="displayMenu = !displayMenu" style="position:absolute;top:2%;right:2%"
+        class="btn btn-success btn-lg">Menu</button>
+      <!-- Tutorial Button (Only mobile & tablette) -->
+      <a *ngIf="fullSreen" (click)="displayInstruction()"
+        style="cursor:pointer;position:absolute;right:17%;bottom:0%;width:15%">
+        <img
+          [ngClass]="{'move': beginAnimation}"
+          class="img-fluid moving"
+          src="assets/img/general/helper.png">
+      </a>
+
+
+      <!-- World List Block  -->
+      <app-island-list
+        [worlds]='worlds'
+        [worldsCompletedScore]='worldsCompletedScore'
+        [userRanking]='user.ranking'
+        (worldSelected)="startTransition($event)"
+      ></app-island-list>
+
+      <!-- Transition Block -->
+      <app-cloud-transition
+        [transition] = "transition"
+      ></app-cloud-transition>
+
+
+    </div>
+  </div>
+  <!-- ToolBar (only desktop)  -->
+  <app-world-map-tool-bar *ngIf="displayGame && !fullSreen" (displayMenu)="displayMenu = $event"></app-world-map-tool-bar>
+</div>

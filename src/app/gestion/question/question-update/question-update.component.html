@@ -1,0 +1,98 @@
+<button type="button" class="btn btn-outline-primary" (click)="addQuestionIsCollapsed = !addQuestionIsCollapsed" [attr.aria-expanded]="!addQuestionIsCollapsed"
+  aria-controls="collapseQuestionDiv">
+  {{ question.id === undefined ? 'Ajouter une question' : 'Modification' }}
+</button>
+<div class="card collapse" id="collapseQuestionDiv" [ngbCollapse]="addQuestionIsCollapsed && question.id === undefined ">
+    <div class="card-body">
+
+      <ngb-tabset>
+          <ngb-tab  title="Data" >
+            <ng-template ngbTabContent >
+                <div class="card">
+                    <div class="card-header">
+                      <h4>Informations sur la question</h4>
+                    </div>
+                    <div class="card-body">
+                      <form #questionForm="ngForm" (ngSubmit)="updateQuestion()">
+                        <div class="form-group">
+                            <label class="center-block">
+                              Question :
+                            </label>
+                            <input
+                              [(ngModel)]="question.wording"
+                              class="form-control"
+                              name="wording"
+                              required
+                              >
+                          </div>
+                          <div class="form-group">
+                              <label class="center-block">
+                                  Texte qui apparait apres avoir répondu à la question :
+                              </label>
+                              <app-ngx-editor
+                                [placeholder]="'Entrer le texte qui s\'affichera apres avoir répondu à la question'"
+                                [spellcheck]="true"
+                                [(ngModel)]="question.complement"
+                                name="complement"
+                                required
+                                >
+                              </app-ngx-editor>
+                            </div>
+                          <p class="alert alert-success" *ngIf="showHelper" >
+                            {{ textHelper }}
+                          </p>
+                          <div class="mb-2">
+                              <button
+                                type="submit"
+                                class="btn btn-primary btn-lg"
+                                [disabled]="!questionForm.form.valid"
+                                >
+                                  Valider
+                              </button>
+                          </div>
+                      </form>
+                    </div>
+                </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab  title="Réponses" *ngIf="question.id !== undefined" [disabled]="question.id === undefined" >
+              <!-- disabled="question.id === undefined" -->
+              <ng-template ngbTabContent >
+                  <div class="card" *ngIf="question.id !== undefined">
+                      <div class="card-header">
+                          <h4>Réponses associées à la question</h4>
+                      </div>
+                      <div class="card-body">
+                          <app-question-answers-update
+                          [answers]="question.answers"
+                          [questionId]="question.id"
+                          (answerAdded)="addAnswersList($event)"
+                          (answerDeleted)="deleteAnswersList($event)"
+                        ></app-question-answers-update>
+                      </div>
+                  </div>
+              </ng-template>
+            </ngb-tab>
+            <!-- disabled="question.id === undefined" -->
+            <ngb-tab  title="Images" *ngIf="question.id !== undefined" [disabled]="question.id === undefined" >
+                <ng-template ngbTabContent >
+                    <div class="card" *ngIf="question.id !== undefined">
+                        <div class="card-header">
+                            <h4>Image associée à la question</h4>
+                        </div>
+                        <div class="card-body">
+                            <app-question-image-update
+                              [question] = "question"
+                              (imageUpload) = "updateImageQuestion($event)"
+                          ></app-question-image-update>
+                        </div>
+                    </div>
+                </ng-template>
+              </ngb-tab>
+        </ngb-tabset>
+        <div class="mt-2">
+            <button (click)="cancelUpdate()" class="btn btn-success">Retour à la liste des questions</button>
+          </div>
+        </div>
+      </div>
+

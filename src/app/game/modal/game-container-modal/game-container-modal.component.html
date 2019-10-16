@@ -1,0 +1,12 @@
+<div class="modal-body">
+  <!-- QUIZZ MODAL CONTENT -->
+  <app-quizz-game *ngIf="state === 'quizz'" [theme]="theme" (completeGame)="completeGame($event)">
+  </app-quizz-game>
+  <!-- PUZZLE MODAL CONTENT -->
+  <app-puzzle *ngIf="state === 'puzzle'" [themeId]="theme.id" (completeGame)="completeGame($event)">
+  </app-puzzle>
+  <!-- MEMORY GAME MODAL CONTENT -->
+  <app-memory-game *ngIf="state === 'memory'" style="margin: auto" [themeId]="theme.id"
+    (completeGame)="completeGame($event)">
+  </app-memory-game>
+</div>

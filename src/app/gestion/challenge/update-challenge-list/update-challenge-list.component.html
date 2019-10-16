@@ -1,0 +1,33 @@
+<app-nav></app-nav>
+<div class="container mt-4" *ngIf="challenges !== null" >
+  <div class="card">
+
+<div class="card-header">
+  <h1>Gestion des challenges</h1>
+</div>
+  <div class="card-body">
+
+  <app-add-challenge
+    (challengeAdded)="addChallenge($event)"
+  >
+  </app-add-challenge>
+  <table class="table mt-4">
+    <tr class="thead-dark">
+      <th>Id</th>
+      <th>Challenge</th>
+      <th>Description</th>
+      <th>Modifier</th>
+    </tr>
+    <tr *ngFor="let challenge of challenges">
+      <td>{{ challenge.id }}</td>
+      <td>{{ challenge.wording }}</td>
+      <td>{{ challenge.description }}</td>
+      <td>
+        <a routerLink="/gestion/challenge/{{ challenge.id }}" routerLinkActive="active" class="btn btn-primary">modifier</a>
+      </td>
+    </tr>
+  </table>
+</div>
+</div>
+</div>
+

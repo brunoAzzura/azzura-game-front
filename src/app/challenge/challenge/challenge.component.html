@@ -1,0 +1,39 @@
+
+<!-- #nav2 -->
+<div #nav >
+  <app-nav *ngIf="!fullScreen"  ></app-nav>
+</div>
+
+<!-- <app-challenge-recap></app-challenge-recap> -->
+
+
+<!-- <div class="row">
+  <div class="col-md-4">
+    <app-advancement-container></app-advancement-container>
+  </div> -->
+  <!-- <div class="col-md-8"> -->
+  <app-loader *ngIf="challenge === null" ></app-loader>
+  <div class="game-container" [ngClass]="{'mobile-challenge-container':fullScreen}" *ngIf="challenge !== null" >
+    <div class="card" style="min-height:100%" >
+      <div class="card-body" [ngClass]="{'p-2':fullScreen}" >
+          <div id="game-content">
+              <app-notice-container
+                *ngIf="state.status === 'start'"
+                [challenge]="challenge"
+                (tutoCompleted)="updateStatus($event)"
+              ></app-notice-container>
+              <app-quizz-game
+                *ngIf="state.status === 'question'"
+                [question]="currentQuestion"
+                (completeGame)="completeQuestion($event)"
+              ></app-quizz-game>
+              <app-score-container
+                *ngIf="state.status === 'endGame'"
+                [challenge]="challenge"
+                [state]="state"
+              >
+              </app-score-container>
+            </div>
+      </div>
+    </div>
+  </div>

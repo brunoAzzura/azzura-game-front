@@ -1,0 +1,24 @@
+/* :host ::ng-deep .tabset a.nav-link.active {
+  color: red;
+  font-weight: bold!important;
+}
+
+:host ::ng-deep .tabset a{
+  padding: 0px 8px;
+} */
+
+.a_img:hover{
+  cursor: help !important;
+}
+
+
+/* .modal-dialog */
+/* width:60% !important */
+/* background-color: #e87766 !important; */
+
+.smallTitle{
+  font-size: 11px!important;
+ }
+
+
+

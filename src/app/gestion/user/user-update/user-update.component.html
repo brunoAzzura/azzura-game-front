@@ -1,0 +1,37 @@
+<form [formGroup]="userForm" (ngSubmit)="updateUser()" >
+    <div class="form-group">
+        <label for="name">Nom :</label>
+        <input  type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && userForm.get('name').errors }" />
+        <div *ngIf="submitted && userForm.get('name').errors" class="invalid-feedback">
+            <div *ngIf="userForm.get('name').hasError('required')">Le nom est requis</div>
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email :</label>
+      <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && userForm.get('email').errors }" />
+      <div *ngIf="submitted && userForm.get('email').errors" class="invalid-feedback">
+          <div *ngIf="userForm.get('email').hasError('required')">L'email est requis'</div>
+          <div *ngIf="userForm.get('email').hasError('email')">Vous devez saisir un email valide</div>
+      </div>
+    </div>
+    <div class="form-group">
+        <label for="username">Login :</label>
+        <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && userForm.get('username').errors }" />
+        <div *ngIf="submitted && userForm.get('username').errors" class="invalid-feedback">
+            <div *ngIf="userForm.get('username').hasError('required')">Le login est requis</div>
+        </div>
+    </div>
+    <div class="form-group" *ngIf="rightManagment" >
+        <p>Sélectionner les droits de l'utilisateur :</p>
+        <label class="ml-3" formArrayName="roles" *ngFor="let role of roles; let i = index">
+          <input type="checkbox" [formControlName]="i">
+          {{roles[i].name}}
+        </label>
+      </div>
+      <div *ngIf="showMessage"  class="alert alert-success">Modification effectuée avec succès</div>
+    <div class="form-group">
+        <button type="submit" [disabled]="loading" class="btn btn-primary">Sauvegarder</button>
+        <i *ngIf="loading" class="fa fa-spinner fa-spin ml-1"></i>
+    </div>
+</form>
+

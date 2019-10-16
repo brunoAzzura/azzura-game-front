@@ -1,0 +1,14 @@
+.island-move
+  animation-duration: 3s
+  animation-timing-function: ease-in
+  animation-name: island-moving
+  animation-iteration-count: infinite
+  animation-direction: alternate // both sides
+  animation-fill-mode: backwards // apply before animation (forwards and both)
+  animation-delay: 0.5s
+
+@keyframes island-moving
+  0%
+    transform: translateY(11%) scale(1.0)
+  100%
+    transform: translateY(6%) scale(1.1)

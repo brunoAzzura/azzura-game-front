@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-header">
+    <h3>3- Gestion des questions</h3>
+  </div>
+  <div class="card-body">
+      <app-question-update
+        [question] = question
+        [challengeId] = challengeId
+        [themeId] = themeId
+        (questionUpdated) = updateQuestionList($event)
+        (questionAdded) = addQuestionList($event)
+        (questionUnselected) = unselectQuestion()
+        (questionAnswerAdded) = updateQuestionAddAnswer($event)
+        (questionAnswerRemoved) = updateQuestionRemoveAnswer($event)
+        ></app-question-update>
+      <app-questions-list-update
+        *ngIf="question.id === undefined"
+        [questions] = questions
+        (questionDeleted) = deleteQuestionList($event)
+        (questionSelected) = updateQuestion($event)
+      >
+      </app-questions-list-update>
+  </div>
+</div>

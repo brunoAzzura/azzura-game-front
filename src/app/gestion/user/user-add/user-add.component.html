@@ -1,0 +1,65 @@
+<app-nav></app-nav>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+          <h3>Ajouter un utilisateur</h3>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+                <div class="form-group">
+                    <label for="name">Nom</label>
+                    <input  type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerForm.get('name').errors }" />
+                    <div *ngIf="submitted && registerForm.get('name').errors" class="invalid-feedback">
+                        <div *ngIf="registerForm.get('name').hasError('required')">Le nom est requis</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerForm.get('email').errors }" />
+                  <div *ngIf="submitted && registerForm.get('email').errors" class="invalid-feedback">
+                      <div *ngIf="registerForm.get('email').hasError('required')">L'email est requis</div>
+                      <div *ngIf="registerForm.get('email').hasError('email')">Vous devez saisir un email valide</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <label for="username">Login</label>
+                    <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerForm.get('username').errors }" />
+                    <div *ngIf="submitted && registerForm.get('username').errors" class="invalid-feedback">
+                        <div *ngIf="registerForm.get('username').hasError('required')">Le login est requis</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && registerForm.get('password').errors }" />
+                    <div *ngIf="submitted && registerForm.get('password').errors" class="invalid-feedback">
+                        <div *ngIf="registerForm.get('password').hasError('required')">Le password est requis</div>
+                        <div *ngIf="registerForm.get('password').hasError('minlength')">Le password doit faire au moins 6 caracrtères</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p>Sélectionner les droits de l'utilisateur :</p>
+                    <label class="ml-3" formArrayName="roles" *ngFor="let role of roles; let i = index">
+                        <input type="checkbox" [formControlName]="i">
+                        {{roles[i].name}}
+                    </label>
+                </div>
+                <div class="form-group">
+                    <button type="submit" [disabled]="loading" class="btn btn-primary">Sauvegarder</button>
+                    <i *ngIf="loading" class="fa fa-spinner fa-spin ml-1"></i>
+                    <a [routerLink]="['/gestion/users']" class="btn btn-link">Annuler</a>
+                </div>
+            </form>
+        </div>
+      </div>
+</div>
+
+
+
+    <!-- <div class="form-group">
+        <label for="firstName">Prénom</label>
+        <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+        <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+            <div *ngIf="f.firstName.errors.required">First Name is required</div>
+        </div>
+    </div> -->

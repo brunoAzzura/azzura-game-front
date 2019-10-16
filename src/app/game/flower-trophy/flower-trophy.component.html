@@ -1,0 +1,15 @@
+
+<div *ngIf="nbWorldScoreMax === NB_WORLD then flowerUnlockBlock else flowerLockBlock"></div>
+    <ng-template #flowerUnlockBlock>
+      <img (click)="openVideo()"
+        style="position:absolute;width:12%;bottom:1%;left:4%"
+        class="img-fluid cliclable" src="{{ getGoodToKnowPicture() }}"
+       >
+    </ng-template>
+    <ng-template #flowerLockBlock>
+      <img
+        style="position:absolute;width:12%;bottom:1%;left:4%"
+        class="img-fluid" src="{{ getGoodToKnowPicture() }}" placement="right"
+        >
+    </ng-template>
+

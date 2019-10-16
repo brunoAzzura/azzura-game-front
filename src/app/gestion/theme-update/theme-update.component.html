@@ -1,0 +1,168 @@
+<app-nav></app-nav>
+<div class="container">
+  <div class="alert alert-dark mt-4">
+    <h1>Modification du theme : {{ theme?.wording }}</h1>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <ngb-tabset>
+        <ngb-tab  title="Data" >
+          <ng-template ngbTabContent >
+            <div class="card">
+              <div class="card-header">
+                <h2>1- Détail du Theme</h2>
+              </div>
+              <div class="card-body">
+                <!-- #################################################################### -->
+                <!-- ############ Formulaire de modification d'un theme ################# -->
+                <!-- #################################################################### -->
+                <form [formGroup]="themeForm" (ngSubmit)="updateTheme()">
+                  <div class="row">
+                    <div class="col-3">
+                      <div class="form-group">
+                        <label class="center-block">
+                          Libellé:
+                        </label>
+                        <input class="form-control" formControlName="wording">
+                      </div>
+                      <div class="form-group">
+                        <label class="center-block">
+                          Monde: <b>{{ theme?.world.wording }}</b>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-9">
+                      <div class="form-group">
+                        <label class="center-block">
+                          Description:
+                        </label>
+                        <input class="form-control" formControlName="description">
+                      </div>
+                      <div class="form-group">
+                        <label class="center-block">
+                          Type: <b>{{ theme?.game_type.wording }}</b>
+                        </label>
+                          <select
+                              formControlName="gameType"
+                              [compareWith]="compareByOptionId"
+                              class="form-control"
+                              >
+                              <!--  -->
+                              <option *ngFor="let g of gameTypes" [ngValue]="g" >
+                                {{ g.wording }}
+                              </option>
+                            </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-3">
+                      <div formGroupName="theme_draw">
+                        <h4>Placement</h4>
+                        <div class="form-group">
+                          <label class="center-block">Position X:
+                            <input type="number" class="form-control" formControlName="position_x">
+                          </label>
+                        </div>
+                        <div class="form-group">
+                          <label class="center-block">Position Y:
+                            <input type="number" class="form-control" formControlName="position_y">
+                          </label>
+                        </div>
+                        <div class="form-group">
+                          <label class="center-block">largeur:
+                            <input type="number" class="form-control" formControlName="width">
+                          </label>
+                        </div>
+                      </div>
+                      <button [disabled]="!themeForm.valid" type="submit" class="btn btn-primary">
+                        Save
+                      </button>
+                    </div>
+                    <div class="col-9">
+                      <h4>Aperçu!!!</h4>
+                      <div *ngIf="themes$" style="position: relative;">
+                        <img style="width:100%" class="img-fluid" src="{{ BASE_PATH + theme?.world.world_draw.background }}">
+                        <img *ngFor="let currentTheme of themes$ | async" style="position:absolute;padding:0;opacity:0.6" [ngStyle]="getStylePosition(currentTheme.theme_draw)"
+                          src="{{ BASE_PATH + currentTheme.theme_draw.image_path }}">
+                        <img style="position:absolute;padding:0" src="{{ imgs[0].src }}" [ngStyle]="getStylePosition(themeForm.value.theme_draw)">
+                      </div>
+                    </div>
+                  </div>
+                  <p *ngIf="showMessage"  class="alert alert-success">Modification effectuée avec succès</p>
+                </form>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab  title="gestion des images"  >
+            <!-- disabled="question.id === undefined" -->
+            <ng-template ngbTabContent >
+              <div class="card">
+                <div class="card-header">
+                  <h2>2- Upload des Images </h2>
+                </div>
+                <div class="card-body">
+                  <table class="table table-bordered">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th>Descritpion</th>
+                        <th>Image</th>
+                        <th>Sélectionner</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let img of imgs">
+                        <td>{{ img.description }}</td>
+                        <td>
+                          <img class="img-fluid" style="width:100px" src="{{ img.src }}">
+                        </td>
+                        <td>
+                          <input [checked]="img.checked" type="radio" name="img" (click)="majCheck(img)">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <input type="file" name="photo" ng2FileSelect [uploader]="uploader" />
+                  <button type="button" class="btn btn-primary" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                    Valider l'upload
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-tab>
+          <!-- disabled="question.id === undefined" -->
+          <ngb-tab  title="gestion du jeu"  >
+              <ng-template ngbTabContent >
+                <div>
+                  <app-update-questions-container
+                    [themeId]="theme.id"
+                    *ngIf="theme && theme.game_type.wording === 'quizz'"
+                  >
+                  </app-update-questions-container>
+                  <app-memory-game-gestion
+                    [theme]="theme"
+                    *ngIf="theme && theme.game_type.wording === 'memory'"
+                  >
+                  </app-memory-game-gestion>
+                  <app-puzzle-gestion
+                    *ngIf="theme && theme.game_type.wording === 'puzzle'"
+                    [theme]="theme"
+                  >
+                  </app-puzzle-gestion>
+                </div>
+              </ng-template>
+            </ngb-tab>
+      </ngb-tabset>
+      <div class="mt-2">
+          <button
+            class="btn btn-success"
+            (click)="returnWorldgestion()"
+            >
+            Retour à la gestion du monde
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

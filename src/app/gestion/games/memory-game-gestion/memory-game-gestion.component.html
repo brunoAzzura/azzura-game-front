@@ -1,0 +1,70 @@
+<!-- ############################################################################ -->
+<!-- ########################### Configuration du jeu de mémoire ############ -->
+<!-- ############################################################################ -->
+<!-- @todo : en faire un component ! -->
+<div class="card mt-4">
+  <div class="card-header">
+    <h2>3- Associer des cartes pour le jeu de mémoire</h2>
+  </div>
+  <div class="card-body">
+    <button class="btn  btn-primary" class="btn btn-outline-primary" (click)="addIsCollapsed = !addIsCollapsed" [attr.aria-expanded]="!addIsCollapsed"
+      aria-controls="collapseThemeDiv" type="button">
+      {{ mode === 'insert' ? "Ajouter une carte" : "Modification d'une carte" }}
+    </button>
+    <div class="card collapse" id="collapseThemeDiv" [ngbCollapse]="addIsCollapsed">
+      <div class="card">
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <label class="center-block">
+                Libellé :
+              </label>
+              <input name="name" [(ngModel)]="memoryCard.name" class="form-control">
+            </div>
+            <div *ngIf="mode === 'update'" class="card">
+              <div class="row card-body">
+                <div class="col-md-3">
+                  <p>Image acutelle :</p>
+                </div>
+                <div class="col-md-9">
+                  <img src="{{ BASE_PATH + memoryCard.url }}">
+                </div>
+              </div>
+            </div>
+            <div class="mt-4">
+              <input #selectedFile type="file" name="memoryImage" ng2FileSelect [uploader]="uploaderMemoryCard" />
+              <!-- [disabled]="!uploader.getNotUploadedItems().length" -->
+            </div>
+            <div class="mt-4">
+              <!-- <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" > -->
+              <button type="button" class="btn btn-success btn-s" (click)="updateMemoryCard()">
+                Valider
+              </button>
+              <button type="button" class="btn btn-danger btn-s ml-4" (click)="cancelMemoryCard()">
+                Annuler
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th>#Id</th>
+          <th>Libellé</th>
+          <th style="width: 15%">Image</th>
+          <th>Supprimer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let memoryCard of memoryCards" >
+          <td>{{ memoryCard.id }}</td>
+          <td>{{ memoryCard.name }}</td>
+          <td><img src="{{ BASE_PATH + memoryCard.image_path }}"></td>
+          <td><button class="btn btn-danger" (click)="deleteMemoryCard(memoryCard.id)">Supprimer</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

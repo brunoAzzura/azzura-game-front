@@ -1,0 +1,101 @@
+<div *ngIf="currentQuestion"    class="question-container text-center">
+  <div  class="card" *ngIf="answer === null">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-sm-5">
+          <h5 class="m-0"><i class="fa fa-exclamation-circle mr-3"></i>Quizz</h5>
+        </div>
+        <div class="col-sm-7">
+          <p style="margin-bottom:0;padding:0" class="alert alert-danger" [ngClass]="{'time': animationTimer}" >
+            Il vous reste <b>{{ 60 - (timer$ | async) }}s</b>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p [@flyOutLeft]=""><strong>{{ currentQuestion.wording }}</strong></p>
+
+      <div class="row" *ngIf="currentQuestion.image_path && fullSreen" >
+        <div class="col-4 p-0">
+            <img style="width:100%; text-align: center"
+            (click) = "displayImage = !displayImage"
+            class="img-fluid a_img" *ngIf="currentQuestion.image_path"
+            [ngClass] = "{'img-bigger': displayImage}"
+            src="{{ BASE_PATH.concat(currentQuestion.image_path) }}" />
+            <div style="margin-top:20px;text-align: center">
+              <button class="btn btn-success" [disabled]="checkAnswers.length == 0" (click)="answerMultipleQuestion()">
+                Valider
+              </button>
+            </div>
+        </div>
+        <div class="col-8">
+            <button  *ngFor="let answer of currentQuestion.answers" (click)="checkAnswer(answer)"
+            class="btn d-block mt-2 mr-auto ml-auto"
+            [@flyOutRight]=""
+            style="white-space: normal;width:90%;font-size:12px" [ngClass]="{
+            'btn-outline-secondary': checkAnswers.indexOf(answer.id) == -1,
+            'btn-primary': checkAnswers.indexOf(answer.id) !== -1
+          }">
+          {{ answer.wording }}
+        </button>
+        </div>
+      </div>
+      <div *ngIf="!currentQuestion.image_path || !fullSreen">
+          <img style="width:60%; text-align: center"
+          (click) = "displayImage = !displayImage"
+          class="img-fluid a_img" *ngIf="currentQuestion.image_path"
+          [ngClass] = "{'img-bigger-desktop': displayImage}"
+          src="{{ BASE_PATH.concat(currentQuestion.image_path) }}" />
+
+          <button
+            *ngFor="let answer of currentQuestion.answers"
+            (click)="checkAnswer(answer)"
+            class="btn btn-block mt-2 mr-auto ml-auto"
+            style="white-space: normal;width:90%;font-size:12px"
+            [@flyOutRight]=""
+            [ngClass]="{
+              'btn-outline-secondary': checkAnswers.indexOf(answer.id) == -1,
+              'btn-primary': checkAnswers.indexOf(answer.id) !== -1
+            }" >
+        {{ answer.wording }}
+      </button>
+      <div style="margin-top:20px;text-align: center">
+          <button class="btn btn-success" [disabled]="checkAnswers.length == 0" (click)="answerMultipleQuestion()">
+            Valider
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="answer !== null" >
+      <div class="card-header text-center py-1" *ngIf="answer === true">
+          <h5 [@flyOutLeft]=""><fa-icon style="font-size: 2rem" [icon]="fas.happy" class="mr-2"></fa-icon>Bonne réponse !</h5>
+        </div>
+        <div class="card-header text-center py-1" *ngIf="answer === false" >
+          <h5 [@flyOutLeft]=""><fa-icon style="font-size: 2rem" [icon]="fas.sad" class="mr-2"></fa-icon>Mauvaise réponse !</h5>
+        </div>
+    <div class="card-body">
+
+
+          <div  class="card-body p-2">
+              <div [@flyOutRight]="" class="card" *ngIf="currentQuestion.complement">
+                <div class="card-body p-2">
+                    <h5><i class="fa fa-exclamation-circle mr-1"></i>Bon à savoir :</h5>
+                      <div id="currentQuestion.id" style="font-size:15px" [innerHTML]="currentQuestion.complement"></div>
+                </div>
+              </div>
+
+              <div class="text-center">
+                <button (click)="validComplement()" class="mt-2 btn btn-primary">
+                  Valider
+                </button>
+              </div>
+          </div>
+    </div>
+
+  </div>
+</div>
+<div *ngIf="!currentQuestion"    class="question-container text-center">
+  <img src="assets/img/general/loading.gif" class="img-fluid">
+</div>

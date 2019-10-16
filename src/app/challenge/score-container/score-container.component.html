@@ -1,0 +1,20 @@
+<div class="card">
+  <div class="card-header">
+      <h5><i class="fa fa-exclamation-circle mr-3"></i>Fin du challenge !</h5>
+  </div>
+  <div class="card-body">
+    <div id="challenge.id" [innerHTML]="challenge.ending_text"></div>
+    <div class="card">
+      <div class="card-body">
+          <h3>score final :
+              <strong>{{state.score}}/{{state.nbQuestions}}</strong>
+          </h3>
+      </div>
+    </div>
+    <div class="text-center mt-2">
+        <a routerLink="/challenges" routerLinkActive="active" class="btn btn-primary btn-lg">Retour aux challenges</a>
+    </div>
+  </div>
+</div>
+
+

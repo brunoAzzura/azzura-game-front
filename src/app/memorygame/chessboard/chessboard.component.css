@@ -1,0 +1,49 @@
+:host {
+    /* margin-top: 20px; */
+    width: 100%;
+    background-color: #fff;
+    /* height: 530px; */
+    border-radius: 4px;
+    padding: 10px 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: space-around;
+}
+card:nth-child(4n) {
+    margin-right: 0px;
+}
+@media screen and (max-width: 450px) {
+    :host {
+        /* height: 480px; */
+        padding: 10px 0px;
+    }
+}
+@media screen and (max-width: 370px) {
+    :host {
+        /* height: 450px; */
+    }
+}
+
+.spinner {
+  position: fixed;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  top: 40%;
+  left: 50%;
+  margin-left: -22.5px;
+  width: 45px;
+  height: 45px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

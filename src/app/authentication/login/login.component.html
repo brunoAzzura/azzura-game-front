@@ -1,0 +1,33 @@
+<app-nav></app-nav>
+<!-- style="min-height: 700px;" -->
+<div class="container" >
+  <div class="card">
+    <div class="card-header">
+        <h3>Connexion</h3>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+          <div class="form-group">
+              <label for="username">Login</label>
+              <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+              <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                  <div *ngIf="f.username.errors.required">Saisissez votre login.</div>
+              </div>
+          </div>
+          <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+              <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                  <div *ngIf="f.password.errors.required">Saississez votre mot de passe</div>
+              </div>
+          </div>
+          <app-alert></app-alert>
+          <div class="form-group">
+              <button type="submit" [disabled]="loading" class="btn btn-primary">Login</button>
+              <i *ngIf="loading" class="fa fa-spinner fa-spin ml-1"></i>
+              <!-- <a [routerLink]="['/register']" class="btn btn-link">Register</a> -->
+          </div>
+      </form>
+    </div>
+  </div>
+</div>

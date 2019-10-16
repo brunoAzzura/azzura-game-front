@@ -1,0 +1,15 @@
+.move_cloud
+  animation-duration: 1.2s
+  animation-timing-function: ease-in
+  animation-name: moving_cloud
+  animation-fill-mode: both  // apply before animation (forwards and both and backwards)
+
+@keyframes moving_cloud
+  0%
+    transform: translateY(50%)
+  50%
+    transform: translateY(20%) scale(1.2)
+  80%
+    transform: translateY(15%) scale(1.3)
+  100%
+    transform: translateY(-20%) scale(1.5)
